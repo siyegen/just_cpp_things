@@ -8,13 +8,13 @@ struct LinkedNode {
 class SingleLinkedList {
 public:
     SingleLinkedList();
+    ~SingleLinkedList();
 
     void Add(LinkedNode*);
-    // void Insert(); // add after x node
+    void Insert(LinkedNode* target, LinkedNode* toInsert); // add after x node
     LinkedNode* Find(int);
     bool Remove(int);
-    void Remove(LinkedNode*);
+    bool Remove(LinkedNode*);
 
     LinkedNode* Head;
-
 };

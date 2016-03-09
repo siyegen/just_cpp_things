@@ -4,6 +4,14 @@ SingleLinkedList::SingleLinkedList() {
     Head = nullptr;
 }
 
+SingleLinkedList::~SingleLinkedList(){
+    while(Head) {
+        LinkedNode* temp = Head->Next;
+        delete Head;
+        Head = temp;
+    }
+}
+
 void SingleLinkedList::Add(LinkedNode* node) {
     if (!Head) { // nullptr
         Head = node;
@@ -14,6 +22,12 @@ void SingleLinkedList::Add(LinkedNode* node) {
         curr = curr->Next;
     }
     curr->Next = node;
+}
+
+void SingleLinkedList::Insert(LinkedNode* target, LinkedNode* toInsert) {
+    toInsert->Next = target->Next;
+    target->Next = toInsert;
+    return;
 }
 
 LinkedNode* SingleLinkedList::Find(int value) {
@@ -39,5 +53,16 @@ bool SingleLinkedList::Remove(int value) {
 	return false;
 }
 
-void SingleLinkedList::Remove(LinkedNode *) {
+bool SingleLinkedList::Remove(LinkedNode* node) {
+	for (LinkedNode* curr = Head, *prev = nullptr; curr; prev = curr, curr = curr->Next) {
+        if (curr == node) {
+			if (!prev) {
+				Head = curr->Next;
+				return true;
+			}
+            prev->Next = curr->Next;
+            return true;
+        }
+    }
+    return false;
 }
