@@ -1,7 +1,8 @@
 #include <iostream>
 #include "linked_list.h"
 
-void printList(LinkedList&);
+void printList(const LinkedList&);
+void reverseList(LinkedList*);
 
 int main() {
     std::cout << "Hello world" << std::endl;
@@ -35,15 +36,33 @@ int main() {
 	std::cout << "\nAfter insert 600"<< std::endl;
 	printList(list);
     
-    for (int i = 0; i < 1000000; i++) {
+    for (int i = 0; i < 10; i++) {
         list.Add(new LinkedNode{i+100, nullptr});
     }
     delete node2;
     delete node;
+    
+    std::cout << "Before reverse" << std::endl;
+	printList(list);
+    std::cout << "\n\nReversing" << std::endl;
+    reverseList(&list);
+	printList(list);
 }
 
-void printList(LinkedList &list) {
+void printList(const LinkedList &list) {
 	for (LinkedNode* curr = list.Head; curr; curr = curr->Next) {
 		std::cout << "node data " << curr->data << std::endl;
 	}
+}
+
+void reverseList(LinkedList* list) {
+    LinkedNode* rev = nullptr;
+    LinkedNode* curr = list->Head;
+    while(curr) {
+        LinkedNode* temp = curr->Next;
+        curr->Next = rev;
+        rev = curr;
+        curr = temp;
+    }
+    list->Head = rev;
 }
