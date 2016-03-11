@@ -67,6 +67,19 @@ bool SingleLinkedList::Remove(LinkedNode* node) {
     return false;
 }
 
+void SingleLinkedList::Reverse() {
+	LinkedNode* rev = nullptr;
+	LinkedNode* curr = Head;
+
+	while (curr) {
+		LinkedNode* temp = curr->Next;
+		curr->Next = rev;
+		rev = curr;
+		curr = temp;
+	}
+	Head = rev;
+}
+
 
 SingleLinkedListWTail::SingleLinkedListWTail() {
     Head = nullptr;
@@ -89,4 +102,19 @@ void SingleLinkedListWTail::Add(LinkedNode* node) {
     }
     Tail->Next = node;
     Tail = node;
+}
+
+
+void SingleLinkedListWTail::Reverse() {
+	LinkedNode* rev = nullptr;
+	LinkedNode* curr = Head;
+	Tail = Head;
+
+	while (curr) {
+		LinkedNode* temp = curr->Next;
+		curr->Next = rev;
+		rev = curr;
+		curr = temp;
+	}
+	Head = rev;
 }

@@ -2,7 +2,6 @@
 #include "linked_list.h"
 
 void printList(const LinkedList&);
-void reverseList(LinkedList*);
 
 int main() {
     std::cout << "Hello world" << std::endl;
@@ -42,10 +41,10 @@ int main() {
     delete node2;
     delete node;
     
-    std::cout << "Before reverse" << std::endl;
+    std::cout << "Before reverse: tail->" << list.Tail->data << std::endl;
 	printList(list);
-    std::cout << "\n\nReversing" << std::endl;
-    reverseList(&list);
+	list.Reverse();
+    std::cout << "\n\nReversing: tail->" << list.Tail->data << std::endl;
 	printList(list);
 }
 
@@ -53,16 +52,4 @@ void printList(const LinkedList &list) {
 	for (LinkedNode* curr = list.Head; curr; curr = curr->Next) {
 		std::cout << "node data " << curr->data << std::endl;
 	}
-}
-
-void reverseList(LinkedList* list) {
-    LinkedNode* rev = nullptr;
-    LinkedNode* curr = list->Head;
-    while(curr) {
-        LinkedNode* temp = curr->Next;
-        curr->Next = rev;
-        rev = curr;
-        curr = temp;
-    }
-    list->Head = rev;
 }
