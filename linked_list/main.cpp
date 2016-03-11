@@ -1,9 +1,11 @@
 #include <iostream>
 #include "linked_list.h"
 
+void printList(LinkedList&);
+
 int main() {
     std::cout << "Hello world" << std::endl;
-    SingleLinkedList list;
+    SingleLinkedListWTail list;
     
 	LinkedNode* node = new LinkedNode{ 10, nullptr };
 	LinkedNode* node2 = new LinkedNode{ 111, nullptr };
@@ -11,40 +13,37 @@ int main() {
 	list.Add(node2);
 	list.Add(new LinkedNode{ 22, nullptr });
 
-	for (LinkedNode* curr = list.Head; curr; curr = curr->Next) {
-		std::cout << "node data " << curr->data << std::endl;
-	}
+	printList(list);
 	LinkedNode* found = list.Find(22);
 	std::cout << "found node " << found->data << std::endl;
 	list.Remove(10);
 	std::cout << "\nAfter remove 10"<< std::endl;
     
-	for (LinkedNode* curr = list.Head; curr; curr = curr->Next) {
-		std::cout << "node data " << curr->data << std::endl;
-	}
+	printList(list);
     list.Add(new LinkedNode{ 89, nullptr });
 	std::cout << "\nAdded node 89"<< std::endl;
-    for (LinkedNode* curr = list.Head; curr; curr = curr->Next) {
-		std::cout << "node data " << curr->data << std::endl;
-	}
+    
+	printList(list);
     list.Remove(node2);
     
 	std::cout << "\nAfter remove 111"<< std::endl;
-	for (LinkedNode* curr = list.Head; curr; curr = curr->Next) {
-		std::cout << "node data " << curr->data << std::endl;
-	}
+	printList(list);
     
     LinkedNode* toInsert = new LinkedNode{600, nullptr};
     list.Insert(found, toInsert);
     
 	std::cout << "\nAfter insert 600"<< std::endl;
-	for (LinkedNode* curr = list.Head; curr; curr = curr->Next) {
-		std::cout << "node data " << curr->data << std::endl;
-	}
+	printList(list);
     
-    for (short i = 0; i < 10; i++) {
+    for (int i = 0; i < 1000000; i++) {
         list.Add(new LinkedNode{i+100, nullptr});
     }
     delete node2;
     delete node;
+}
+
+void printList(LinkedList &list) {
+	for (LinkedNode* curr = list.Head; curr; curr = curr->Next) {
+		std::cout << "node data " << curr->data << std::endl;
+	}
 }

@@ -66,3 +66,27 @@ bool SingleLinkedList::Remove(LinkedNode* node) {
     }
     return false;
 }
+
+
+SingleLinkedListWTail::SingleLinkedListWTail() {
+    Head = nullptr;
+    Tail = nullptr;
+}
+
+SingleLinkedListWTail::~SingleLinkedListWTail(){
+    while(Head) {
+        LinkedNode* temp = Head->Next;
+        delete Head;
+        Head = temp;
+    }
+}
+
+void SingleLinkedListWTail::Add(LinkedNode* node) {
+    if (!Head) { // nullptr
+        Head = node;
+        Tail = node;
+        return;
+    }
+    Tail->Next = node;
+    Tail = node;
+}

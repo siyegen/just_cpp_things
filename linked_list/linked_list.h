@@ -5,7 +5,20 @@ struct LinkedNode {
     LinkedNode* Next;
 };
 
-class SingleLinkedList {
+class LinkedList {
+public:
+    virtual ~LinkedList() {};
+
+    virtual void Add(LinkedNode*) = 0;
+    virtual void Insert(LinkedNode* target, LinkedNode* toInsert) = 0; // add after x node
+    virtual LinkedNode* Find(int) = 0;
+    virtual bool Remove(int) = 0;
+    virtual bool Remove(LinkedNode*) = 0;
+
+    LinkedNode* Head; // Every Linked list must have a Head pointer
+};
+
+class SingleLinkedList: public LinkedList {
 public:
     SingleLinkedList();
     ~SingleLinkedList();
@@ -15,6 +28,14 @@ public:
     LinkedNode* Find(int);
     bool Remove(int);
     bool Remove(LinkedNode*);
+};
 
-    LinkedNode* Head;
+class SingleLinkedListWTail: public SingleLinkedList {
+public:
+    SingleLinkedListWTail();
+    ~SingleLinkedListWTail();
+
+    void Add(LinkedNode*);
+    
+    LinkedNode* Tail;
 };
