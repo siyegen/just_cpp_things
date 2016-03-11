@@ -193,3 +193,17 @@ bool DoubleLinkedList::Remove(DoubleLinkedNode* node) {
     }
     return false;
 }
+
+void DoubleLinkedList::Reverse() {
+    DoubleLinkedNode* curr = Head;
+    
+    while(curr) {
+        DoubleLinkedNode* temp = curr->Prev;
+        curr->Prev = curr->Next;
+        curr->Next = temp;
+        curr = curr->Prev;
+    }
+    DoubleLinkedNode* temp = Tail;
+    Tail = Head;
+    Head = temp;
+}

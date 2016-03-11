@@ -10,8 +10,8 @@ void sampleDoubleLinkedList();
 
 int main() {
     std::cout << "Hello world" << std::endl;
-    sampleSingleLinkedList();
-    // sampleDoubleLinkedList();
+    // sampleSingleLinkedList();
+    sampleDoubleLinkedList();
 }
 
 void sampleDoubleLinkedList() {
@@ -25,7 +25,7 @@ void sampleDoubleLinkedList() {
     // list.Insert(node2, new DoubleLinkedNode{9, nullptr, nullptr});
     // printListReverse(list);
     // DoubleLinkedNode* found = list.Find(70);
-    int length = 100000000;
+    int length = 10;
     int idx = length*0.25;
     for(int i=0; i<length; i++) {
         list.Add(new DoubleLinkedNode{i, nullptr, nullptr});
@@ -44,6 +44,16 @@ void sampleDoubleLinkedList() {
     if (found2) std::cout << "Found it" << std::endl;
     std::cout << "Finished finding, Find:" << elapsedFind.count() << "s";
     std::cout << " FindBetter:" << elapsedFindBetter.count() << "s" << std::endl;
+    
+    printList(list);
+    std::cout << "Reverse: ";
+    std::cout << list.Head->data << " <-> " << list.Tail->data;
+    std::cout << std::endl;
+    list.Reverse();
+    printList(list);
+    std::cout << "Reverse: ";
+    std::cout << list.Head->data << " <-> " << list.Tail->data;
+    std::cout << std::endl;
 }
 
 void sampleSingleLinkedList() {
