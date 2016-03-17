@@ -17,14 +17,27 @@ void TCPListenServer();
 
 int main() {
     std::cout << "Yo Server" << std::endl;
-    rawServer();
-    return 0;
+    // rawServer();
+    TCPListenServer();
 }
 
 void TCPListenServer() {
     TCPListener Listener = TCPListener("", 9954);
     Listener.Listen(5);
-    TCPConnection* Conn = Listener.Accept();
+    TCPConnection* Conn = Listener.Accept(); // Blocks
+    
+    std::array<char, 255> Buff;
+    memset(&Buff, 0, 255);
+    int ReadSize;
+    while((ReadSize = Conn->Read(Buff)) > 0) {
+        std::cout << "Client sent: " << Buff.data() << "(" << ReadSize << ")" << std::endl;
+        int WriteSize = Conn->Write(Buff, ReadSize);
+        if (WriteSize < 0) {
+            std::cout << "Failed to send" << std::endl;
+        }
+        std::cout << "Wrote bytes: " << WriteSize << std::endl;
+        memset(&Buff, 0, WriteSize);
+    }
 }
 
 void rawServer() {
@@ -63,6 +76,7 @@ void rawServer() {
     }
     // create buffer to hold data
     std::array<char, 32> myBuffer;
+    memset(&myBuffer, 0, 32);
     // recv data and store in buffer
     int recvMsgSize;
     while((recvMsgSize = recv(ClientSockDesc, &myBuffer, myBuffer.size(), 0))>0) {
