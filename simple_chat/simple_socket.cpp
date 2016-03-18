@@ -29,9 +29,16 @@ void TCPListener::Listen(int queueLen) {
     }
 }
 
+void TCPListener::Close() {
+    close(SockDesc);
+}
+
 // Should return Connection
 TCPConnection* TCPListener::Accept() {
-    int ConectionSockDesc = accept(SockDesc, nullptr, 0);
+    // change 2nd arg to store clientaddress info, 3rd will be size
+    sockaddr_in ClientAddr;
+    socklen_t ClientLen = sizeof(sockaddr_in);
+    int ConectionSockDesc = accept(SockDesc, (sockaddr*) &ClientAddr, &ClientLen);
     TCPConnection* Connection = new TCPConnection(ConectionSockDesc);
     return Connection;
 }
@@ -40,7 +47,6 @@ TCPConnection::TCPConnection(int sockDesc) {
     SockDesc = sockDesc;
 }
 
-    // int Read(std::array<char,255> &Buffer);
 int TCPConnection::Read(std::array<char,255> &Buffer) {
    return recv(SockDesc, &Buffer, Buffer.size(), 0);
 }

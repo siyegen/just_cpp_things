@@ -4,16 +4,8 @@
 #include <arpa/inet.h>       // For inet_addr()
 #include <unistd.h>          // For close()
 #include <netinet/in.h>      // For sockaddr_in
-#include <string.h>
 #include <string>
 #include <array>
-
-class SimpleSocket {
-public:
-    ~SimpleSocket();
-protected:
-    int sockDesc;
-};
 
 class TCPConnection {
 public:
@@ -26,6 +18,7 @@ public:
 
 protected:
     int SockDesc;
+    sockaddr_in ClientAddr;
 private:
     TCPConnection(int SockDesc);
     friend class TCPListener;
@@ -45,7 +38,3 @@ protected:
     int Port;
     sockaddr_in LocalAddr;
 };
-
-// TcpListener, creates socket and holds listener
-// .accept() returns a *connection*
-// connection has read/write on it

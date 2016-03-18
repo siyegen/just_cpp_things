@@ -5,9 +5,6 @@
 #include <arpa/inet.h>       // For inet_addr()
 #include <unistd.h>          // For close()
 #include <netinet/in.h>      // For sockaddr_in
-#include <string.h>
-// typedef void raw_type;       // Type used for raw data on this platform
-
 #include <array>
 
 #include "simple_socket.h"
@@ -26,11 +23,11 @@ void TCPListenServer() {
     Listener.Listen(5);
     TCPConnection* Conn = Listener.Accept(); // Blocks
     
-    std::array<char, 255> Buff;
-    memset(&Buff, 0, 255);
+    std::array<char, 255> Buff {};
     int ReadSize;
     while((ReadSize = Conn->Read(Buff)) > 0) {
-        std::cout << "Client sent: " << Buff.data() << "(" << ReadSize << ")" << std::endl;
+        std::cout << "Client sent: " << std::string(Buff.begin(), Buff.end());
+        std::cout << "(" << ReadSize << ")" << std::endl;
         int WriteSize = Conn->Write(Buff, ReadSize);
         if (WriteSize < 0) {
             std::cout << "Failed to send" << std::endl;
@@ -38,6 +35,8 @@ void TCPListenServer() {
         std::cout << "Wrote bytes: " << WriteSize << std::endl;
         memset(&Buff, 0, WriteSize);
     }
+    Conn->Close();
+    Listener.Close();
 }
 
 void rawServer() {
