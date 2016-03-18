@@ -19,3 +19,7 @@ Compile / run with:
 ```
 g++ -std=c++11 -W -Wall -Wextra -pedantic simple_chat/*.cpp -o run_server && ./run_server
 ```
+
+simple_samples
+--------------
+Simple example problems solved in go and c++
