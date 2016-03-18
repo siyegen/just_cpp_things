@@ -23,7 +23,7 @@ void TCPListenServer() {
     Listener.Listen(5);
     TCPConnection* Conn = Listener.Accept(); // Blocks
     
-    std::array<char, 255> Buff {};
+    SimpleConnBuffer Buff {};
     int ReadSize;
     while((ReadSize = Conn->Read(Buff)) > 0) {
         std::cout << "Client sent: " << std::string(Buff.begin(), Buff.end());
@@ -37,6 +37,7 @@ void TCPListenServer() {
     }
     Conn->Close();
     Listener.Close();
+    delete Conn;
 }
 
 void rawServer() {

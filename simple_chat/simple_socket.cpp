@@ -47,11 +47,11 @@ TCPConnection::TCPConnection(int sockDesc) {
     SockDesc = sockDesc;
 }
 
-int TCPConnection::Read(std::array<char,255> &Buffer) {
+int TCPConnection::Read(SimpleConnBuffer &Buffer) {
    return recv(SockDesc, &Buffer, Buffer.size(), 0);
 }
 
-int TCPConnection::Write(std::array<char,255> &Buffer, int WriteSize) {
+int TCPConnection::Write(SimpleConnBuffer &Buffer, int WriteSize) {
     return send(SockDesc, &Buffer, WriteSize, 0);
 }
 

@@ -7,13 +7,13 @@
 #include <string>
 #include <array>
 
+using SimpleConnBuffer = std::array<char, 255>;
+
 class TCPConnection {
 public:
-    ~TCPConnection();
-    
     // read from connection into buffer<char>, return bytes written
-    int Read(std::array<char,255> &Buffer);
-    int Write(std::array<char,255> &Buffer, int WriteSize);
+    int Read(SimpleConnBuffer &Buffer);
+    int Write(SimpleConnBuffer &Buffer, int WriteSize);
     void Close();
 
 protected:
