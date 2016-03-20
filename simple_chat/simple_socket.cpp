@@ -51,6 +51,26 @@ int TCPConnection::Read(SimpleConnBuffer &Buffer) {
    return recv(SockDesc, &Buffer, Buffer.size(), 0);
 }
 
+std::string TCPConnection::ReadString(char delimiter) {
+    std::string Result = "";
+    int ReadSize;
+    SimpleConnBuffer Buff;
+    bool found = false;
+    while((ReadSize = Read(Buff)) > 0) {
+        if(found) continue; // drain rest of info from socket
+        for(int i=0; i<Buff.size(); i++) {
+            if(Buff.at(i) == delimiter) {
+                found = true;
+                // std::string(Buff.begin(), );
+            }
+        }
+        if(!found) { // fill in everything so far
+            Result += std::string(Buff.begin(), Buff.end());
+        }
+    }
+    return Result;
+}
+
 int TCPConnection::Write(SimpleConnBuffer &Buffer, int WriteSize) {
     return send(SockDesc, &Buffer, WriteSize, 0);
 }

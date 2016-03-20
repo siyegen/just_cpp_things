@@ -14,6 +14,8 @@ public:
     // read from connection into buffer<char>, return bytes written
     int Read(SimpleConnBuffer &Buffer);
     int Write(SimpleConnBuffer &Buffer, int WriteSize);
+    
+    std::string ReadString(char delimiter);
     void Close();
 
 protected:
