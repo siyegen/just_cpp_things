@@ -17,12 +17,14 @@ public:
     
     std::string ReadString(char delimiter);
     void Close();
+    
+    std::string GetAddr();
 
 protected:
     int SockDesc;
     sockaddr_in ClientAddr;
 private:
-    TCPConnection(int SockDesc);
+    TCPConnection(int SockDesc, sockaddr_in Addr);
     friend class TCPListener;
 };
 

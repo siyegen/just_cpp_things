@@ -35,16 +35,20 @@ void TCPListener::Close() {
 
 // Should return Connection
 TCPConnection* TCPListener::Accept() {
-    // change 2nd arg to store clientaddress info, 3rd will be size
     sockaddr_in ClientAddr;
     socklen_t ClientLen = sizeof(sockaddr_in);
     int ConectionSockDesc = accept(SockDesc, (sockaddr*) &ClientAddr, &ClientLen);
-    TCPConnection* Connection = new TCPConnection(ConectionSockDesc);
-    return Connection;
+    return new TCPConnection(ConectionSockDesc, ClientAddr);
 }
 
-TCPConnection::TCPConnection(int sockDesc) {
+TCPConnection::TCPConnection(int sockDesc, sockaddr_in Addr) {
     SockDesc = sockDesc;
+    ClientAddr = Addr;
+}
+
+std::string TCPConnection::GetAddr() {
+    return std::string(inet_ntoa(ClientAddr.sin_addr)) +
+        ":" + std::to_string(ntohs(ClientAddr.sin_port));
 }
 
 int TCPConnection::Read(SimpleConnBuffer &Buffer) {
